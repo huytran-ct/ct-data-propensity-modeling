@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    'asia-southeast1-docker.pkg.dev/zeta-matrix-242604/ct-vertex-ai/accepted-call-telesales:latest',
+    '.'
+  ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia-southeast1-docker.pkg.dev/zeta-matrix-242604/ct-vertex-ai/accepted-call-telesales:latest']
