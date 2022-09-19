@@ -11,7 +11,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route("/", methods=['POST'])
+@app.route("get_accepted_call_score", methods=['POST'])
 def get_accepted_call_score():
     feature_name = ["no_listed_ad", "potential_region", "sum_lead", "insert_ad_recency", "order_recency"]
     try:
