@@ -20,7 +20,7 @@ def get_accepted_call_score():
         model = pickle.loads(get_model())
         behavior_user_df = pd.DataFrame(calls, columns=feature_name)
         replies = model.transform(behavior_user_df)[:, 1].tolist()
-        return jsonify({"replies": replies}), 200
+        return jsonify({"replies": replies})
     except Exception as inst:
         return jsonify({"errorMessage": 'something unexpected in input'}), 400
 
