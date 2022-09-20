@@ -14,7 +14,7 @@ accepted_call_model = pickle.loads(get_model("chotot_vertexai",
                                              "accepted_call_telesales.pkl"))
 
 
-@app.route("/get_accepted_call_score", methods=['POST'])
+@app.route("/", methods=['POST'])
 def get_accepted_call_score():
     feature_name = ["no_listed_ad", "potential_region", "sum_lead", "insert_ad_recency", "order_recency"]
     try:
