@@ -9,19 +9,20 @@ import os
 
 from flask import Flask, request, jsonify
 app = Flask(__name__)
-accepted_call_model = pickle.loads(get_model("chotot_vertexai",
-                                             "propensity-model/accepted-call-telesales",
-                                             "accepted_call_telesales.pkl"))
+propensity_models = {"accepted_call_model": pickle.loads(get_model("chotot_vertexai",
+                                                                   "propensity-model/accepted-call-telesales",
+                                                                   "accepted_call_telesales.pkl"))}
 
 
 @app.route("/", methods=['POST'])
-def get_accepted_call_score():
+def get_propensity_score():
     feature_name = ["no_listed_ad", "potential_region", "sum_lead", "insert_ad_recency", "order_recency"]
     try:
         request_json = request.get_json()
-        calls = request_json['calls']
+        calls = request_json["calls"]
+        user_defined_context = request_json["userDefinedContext"]
         behavior_user_df = pd.DataFrame(calls, columns=feature_name)
-        replies = accepted_call_model.transform(behavior_user_df)[:, 1].tolist()
+        replies = propensity_models[user_defined_context["model_name"]].transform(behavior_user_df)[:, 1].tolist()
         return jsonify({"replies": replies})
     except Exception as inst:
         return jsonify({"errorMessage": 'something unexpected in input'}), 400
